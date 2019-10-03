@@ -1,0 +1,14 @@
+import test1
+
+Import('env')
+
+test_builder = Builder(action = 'sleep 5s && touch $TARGET')
+env1 = env.Clone(BUILDERS = {'Foo' : test_builder})
+
+list = [ 'a', 'b', 'c', 'd' ]
+prev=None
+
+for d in list:
+	target = env1.Foo(File(env1.subst('$O') + '/' + d).abspath, prev)
+	test1.update_deps_list(target[0].abspath)
+	prev = target

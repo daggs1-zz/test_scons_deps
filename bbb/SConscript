@@ -1,0 +1,6 @@
+Import('env')
+
+env2 = env.Clone()
+
+env2.Command('foo.out', '/dev/null', "echo this should be printed after all the sleep and touch ends")
+
